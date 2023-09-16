@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -12,23 +11,20 @@ const (
 	basePath = "http://localhost:8080"
 )
 
+// logger del middleware
 func Logger() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		startTime := time.Now()
+	return func(ctx *gin.Context){
 		path := ctx.Request.URL
+		time := time.Now()
 		method := ctx.Request.Method
+		var size int
 
 		ctx.Next()
 
-		endTime := time.Now()
-		elapsedTime := endTime.Sub(startTime)
-		size := ctx.Writer.Size()
+		if ctx.Writer != nil {
+			size = ctx.Writer.Size()
+		}
 
-		log.Printf("Request:\n"+
-			"  Method: %s\n"+
-			"  Path: %s%s\n"+
-			"  Time: %v\n"+
-			"  Size: %d bytes",
-			method, basePath, path, elapsedTime, size)
+		fmt.Printf("Path: %s%s\nMethod: %s\nTime: %v\nSize: %d",basePath,path,method,time,size)
 	}
 }

@@ -10,7 +10,7 @@ import (
 const (
 	tokenHeaderName = "tokenPostman"
 	envTokenKey     = "TOKEN"
-	invalidUserMsg  = "Usuario inválido"
+	invalidUserMsg  = "Credenciales incorrectas"
 )
 
 // Authenticate es un middleware que verifica si se proporciona el token correcto en la cabecera.
@@ -28,9 +28,9 @@ func Authenticate() gin.HandlerFunc {
 				"error": invalidUserMsg,
 			})
 			return
+		} else {
+			// Continuar con la solicitud si el token es válido.
+			ctx.Next()
 		}
-
-		// Continuar con la solicitud si el token es válido.
-		ctx.Next()
 	}
 }
