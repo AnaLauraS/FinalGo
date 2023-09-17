@@ -17,11 +17,12 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert  = `INSERT INTO my_db.odontologos(apellido,nombre,matricula) VALUES(?,?,?,?,?)`
-	QueryGetAll  = `SELECT id,apellido,nombre,matricula, alta FROM my_db.odontologos`
-	QueryDelete  = `DELETE FROM my_db.odontologos WHERE id = ?`
-	QueryGetById = `SELECT id, apellido,nombre,matricula FROM my_db.odontologos WHERE id = ?`
-	QueryUpdate  = `UPDATE my_db.odontologos SET apellido = ?,nombre = ?,matricula = ? WHERE id = ?`
+	QueryInsert           = `INSERT INTO my_db.odontologos(apellido,nombre,matricula) VALUES(?,?,?,?,?)`
+	QueryGetAll           = `SELECT id,apellido,nombre,matricula, alta FROM my_db.odontologos`
+	QueryDelete           = `DELETE FROM my_db.odontologos WHERE id = ?`
+	QueryGetById          = `SELECT id, apellido,nombre,matricula FROM my_db.odontologos WHERE id = ?`
+	QueryUpdate           = `UPDATE my_db.odontologos SET apellido = ?,nombre = ?,matricula = ? WHERE id = ?`
+	QueryGetIdByMatricula = `SELECT id FROM my_db.odontologos WHERE matricula = ?`
 )
 
 // defino la interfaz para que se apliquen siempre todos los métodos
@@ -31,6 +32,7 @@ type Repository interface {
 	UpdateOdontologo(ctx context.Context, o Odontologo) (Odontologo, error)
 	GetAll(ctx context.Context) ([]Odontologo, error)
 	DeleteOdontologo(ctx context.Context, id int) error
+	GetOdontologoIdByMatricula(ctx context.Context, matricula string) (int, error)
 }
 
 // estructura repositorio con base de datos mysql
@@ -103,6 +105,26 @@ func (r *repository) GetOdontologoByID(ctx context.Context, id int) (Odontologo,
 		return Odontologo{}, ErrNotFound
 	}
 	return odontologo, nil
+}
+
+// obtener Odontologo por ID
+func (r *repository) GetOdontologoIdByMatricula(ctx context.Context, dni string) (int, error) {
+	// ejecuto la query de búsqueda por ID
+	row := r.db.QueryRow(QueryGetIdByMatricula, dni)
+
+	// creo la variable que guarde (muestre) el resultado
+	var odontologo Odontologo
+
+	// verifico si obtengo algún error en los datos
+	err := row.Scan(
+		&odontologo.ID,
+	)
+
+	// devuelvo el error o el odontologo
+	if err != nil {
+		return Odontologo{}.ID, ErrNotFound
+	}
+	return odontologo.ID, nil
 }
 
 // crear Odontologo en BD
