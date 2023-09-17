@@ -12,6 +12,7 @@ type Service interface {
 	CreatePaciente(ctx context.Context, p PacienteRequest) (Paciente, error)
 	UpdatePaciente(ctx context.Context, p PacienteRequest, id int) (Paciente, error)
 	DeletePaciente(ctx context.Context, id int) error
+	GetPacienteIDByDNI(ctx context.Context, dni string) (int, error)
 }
 
 // estrucutra service que contará con un repositorio
@@ -23,7 +24,6 @@ type service struct {
 func NewService(r Repository) Service {
 	return &service{r}
 }
-
 
 // aplico todos los métodos de la interfaz, llamando a su correspondiente método del repositorio (todos conservan el mismo nombre):
 
@@ -43,6 +43,15 @@ func (s *service) GetPacienteByID(ctx context.Context, id int) (Paciente, error)
 		return Paciente{}, ErrNotFound
 	}
 	return p, nil
+}
+
+func (s *service) GetPacienteIDByDNI(ctx context.Context, dni string) (int, error) {
+	id, err := s.r.GetPacienteIDByDNI(ctx, dni)
+	if err != nil {
+		log.Println("log de error por paciente inexistente", err.Error())
+		return Paciente{}.ID, ErrNotFound
+	}
+	return id, nil
 }
 
 func (s *service) CreatePaciente(ctx context.Context, pacienteRequest PacienteRequest) (Paciente, error) {
@@ -77,7 +86,6 @@ func (s *service) UpdatePaciente(ctx context.Context, p PacienteRequest, id int)
 	}
 	return response, nil
 }
-
 
 // función para transformar request en la estructura definida en GO
 func requestToPaciente(pacienteRequest PacienteRequest) Paciente {

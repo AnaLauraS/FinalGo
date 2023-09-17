@@ -9,6 +9,7 @@ import (
 type Service interface {
 	GetOdontologoByID(ctx context.Context, id int) (Odontologo, error)
 	GetAll(ctx context.Context) ([]Odontologo, error)
+	GetOdontologoIdByMatricula(ctx context.Context, matricula string) (int, error)
 	CreateOdontologo(ctx context.Context, o OdontologoRequest) (Odontologo, error)
 	UpdateOdontologo(ctx context.Context, o OdontologoRequest, id int) (Odontologo, error)
 	DeleteOdontologo(ctx context.Context, id int) error
@@ -42,6 +43,15 @@ func (s *service) GetOdontologoByID(ctx context.Context, id int) (Odontologo, er
 		return Odontologo{}, ErrNotFound
 	}
 	return o, nil
+}
+
+func (s *service) GetOdontologoIdByMatricula(ctx context.Context, matricula string) (int, error) {
+	id, err := s.r.GetOdontologoIdByMatricula(ctx, matricula)
+	if err != nil {
+		log.Println("log de error por odontologo inexistente", err.Error())
+		return Odontologo{}.ID, ErrNotFound
+	}
+	return id, nil
 }
 
 func (s *service) CreateOdontologo(ctx context.Context, odontologoRequest OdontologoRequest) (Odontologo, error) {

@@ -17,11 +17,12 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert = `INSERT INTO my_db.pacientes(nombre, apellido, domicilio, dni, alta) VALUES(?,?,?,?,?)`
-	QueryGetAll = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes`
-	QueryDelete  = `DELETE FROM my_db.pacientes WHERE id = ?`
-	QueryGetById = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes WHERE id = ?`
-	QueryUpdate = `UPDATE my_db.pacientes SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
+	QueryInsert     = `INSERT INTO my_db.pacientes(nombre, apellido, domicilio, dni, alta) VALUES(?,?,?,?,?)`
+	QueryGetAll     = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes`
+	QueryDelete     = `DELETE FROM my_db.pacientes WHERE id = ?`
+	QueryGetById    = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes WHERE id = ?`
+	QueryUpdate     = `UPDATE my_db.pacientes SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
+	QueryGetIdByDni = `SELECT id FROM my_db.pacientes WHERE dni = ?`
 )
 
 // defino la interfaz para que se apliquen siempre todos los métodos
@@ -31,6 +32,7 @@ type Repository interface {
 	CreatePaciente(ctx context.Context, p Paciente) (Paciente, error)
 	UpdatePaciente(ctx context.Context, p Paciente) (Paciente, error)
 	DeletePaciente(ctx context.Context, id int) error
+	GetPacienteIDByDNI(ctx context.Context, dni string) (int, error)
 }
 
 // estructura repositorio con base de datos mysql
@@ -45,12 +47,11 @@ func NewRepositoryMySql(db *sql.DB) Repository {
 	}
 }
 
-
 // obtener todos los pacientes:
 func (r *repository) GetAll(ctx context.Context) ([]Paciente, error) {
 	// ejecuto la query que trae todos los datos
 	rows, err := r.db.Query(QueryGetAll)
-	
+
 	// si hay error de query, lo devuelvo
 	if err != nil {
 		return []Paciente{}, ErrEmptyList
@@ -85,12 +86,11 @@ func (r *repository) GetAll(ctx context.Context) ([]Paciente, error) {
 	return pacientes, nil
 }
 
-
 // obtener pacientes por ID
 func (r *repository) GetPacienteByID(ctx context.Context, id int) (Paciente, error) {
 	// ejecuto la query de búsqueda por ID
 	row := r.db.QueryRow(QueryGetById, id)
-	
+
 	// creo la variable que guarde (muestre) el resultado
 	var paciente Paciente
 
@@ -111,6 +111,25 @@ func (r *repository) GetPacienteByID(ctx context.Context, id int) (Paciente, err
 	return paciente, nil
 }
 
+// obtener ID del paciente por DNI
+func (r *repository) GetPacienteIDByDNI(ctx context.Context, dni string) (int, error) {
+	// ejecuto la query de búsqueda por ID
+	row := r.db.QueryRow(QueryGetIdByDni, dni)
+
+	// creo la variable que guarde (muestre) el resultado
+	var paciente Paciente
+
+	// verifico si obtengo algún error en los datos
+	err := row.Scan(
+		&paciente.ID,
+	)
+
+	// devuelvo el error o el paciente
+	if err != nil {
+		return Paciente{}.ID, ErrNotFound
+	}
+	return paciente.ID, nil
+}
 
 // crear paciente en BD
 func (r *repository) CreatePaciente(ctx context.Context, paciente Paciente) (Paciente, error) {
@@ -146,7 +165,6 @@ func (r *repository) CreatePaciente(ctx context.Context, paciente Paciente) (Pac
 	paciente.ID = int(lastId)
 	return paciente, nil
 }
-
 
 // actualizar un registro
 func (r *repository) UpdatePaciente(ctx context.Context, paciente Paciente) (Paciente, error) {
@@ -184,7 +202,6 @@ func (r *repository) UpdatePaciente(ctx context.Context, paciente Paciente) (Pac
 
 	return paciente, nil
 }
-
 
 // eliminar registro
 func (r *repository) DeletePaciente(ctx context.Context, id int) error {
