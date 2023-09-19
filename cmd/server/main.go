@@ -9,6 +9,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "finalgo/docs"
 )
 
 const (
@@ -53,6 +57,9 @@ func main() {
 	router := gin.Default()
 	router.Use(gin.Recovery())
 	router.Use(middleware.Logger())
+
+	// Agrego swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// API de prueba
 	router.GET("/ping", middleware.Authenticate(), func(ctx *gin.Context) {
