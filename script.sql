@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `odontologo` (
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del odontologo',
   `matricula` VARCHAR(100) NOT NULL COMMENT 'Número de licencia del odontologo',
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb3;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `paciente` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador paciente en el sistema',
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `dni` INT NOT NULL COMMENT 'Identificación del paciente',
   `fecha_alta` DATE NOT NULL COMMENT 'Fecha de alta del paciente',
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb3;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `turno` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del turno',
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `turno` (
   CONSTRAINT `turno_FK_1`
     FOREIGN KEY (`id`)
     REFERENCES `paciente` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb3;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb3;
 
 -- Inserciones en la tabla 'odontologo'
 INSERT INTO `odontologo` (`apellido`, `nombre`, `matricula`)
