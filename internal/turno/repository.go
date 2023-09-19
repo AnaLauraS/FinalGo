@@ -17,13 +17,13 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert        = `INSERT INTO my_db.turnos(id_odontologo, id_paciente, fecha_hora, descripcion) VALUES(?,?,?,?)`
-	QueryGetAll        = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turnos`
-	QueryDelete        = `DELETE FROM my_db.turnos WHERE id = ?`
-	QueryGetById       = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turnos WHERE id = ?`
-	QueryUpdate        = `UPDATE my_db.turnos SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
-	QueryGetByPaciente = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turnos WHERE id_paciente = ?`
-	QueryGetByOdontologo = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turnos WHERE id_odontologo = ?`
+	QueryInsert        = `INSERT INTO my_db.turno(id_odontologo, id_paciente, fecha_hora, descripcion) VALUES(?,?,?,?)`
+	QueryGetAll        = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turno`
+	QueryDelete        = `DELETE FROM my_db.turno WHERE id = ?`
+	QueryGetById       = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turno WHERE id = ?`
+	QueryUpdate        = `UPDATE my_db.turno SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
+	QueryGetByPaciente = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turno WHERE id_paciente = ?`
+	QueryGetByOdontologo = `SELECT id, id_odontologo, id_paciente, fecha_hora, descripcion FROM my_db.turno WHERE id_odontologo = ?`
 )
 
 // defino la interfaz para que se apliquen siempre todos los métodos

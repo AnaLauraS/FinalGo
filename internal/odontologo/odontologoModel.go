@@ -10,7 +10,7 @@ type Odontologo struct {
 
 // creamos la misma estructura de Odontologo para las solicitudes por API o recibir datos de entrada.
 type OdontologoRequest struct {
-	ID        int    `json:"id"`
+//	ID        int    `json:"id"`
 	Apellido  string `json:"apellido"`
 	Nombre    string `json:"nombre"`
 	Matricula string `json:"matricula"`

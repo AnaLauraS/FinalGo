@@ -39,7 +39,7 @@ func (h *odontologoHandler) CreateOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var odontologo odontologo.OdontologoRequest
 
-		err := c.ShouldBindJSON(&odontologo)
+		err := c.Bind(&odontologo)
 		if err != nil {
 			web.ErrorResponse(c, http.StatusBadRequest)
 			return
@@ -63,7 +63,7 @@ func (h *odontologoHandler) CreateOdontologo() gin.HandlerFunc {
 
 // validateEmptys valida que los campos claves no esten vacios
 func validateEmptys2(odontologo odontologo.OdontologoRequest) (bool, error) {
-	if odontologo.Apellido == "" || odontologo.Nombre == "" || odontologo.Matricula == "" {
+	if (odontologo.Apellido == "" || odontologo.Nombre == "" || odontologo.Matricula == "") {
 		return false, errors.New("No se permiten los campos apellido, nombre y matricula vacíos")
 	}
 	return true, nil
