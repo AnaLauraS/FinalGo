@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del paciente',
   `apellido` VARCHAR(100) NOT NULL COMMENT 'Apellido del paciente',
   `domicilio` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Dirección del paciente',
-  `dni` INT NOT NULL COMMENT 'Identificación del paciente',
+  `dni` VARCHAR(12) NOT NULL COMMENT 'Identificación del paciente',
   `fecha_alta` DATE NOT NULL COMMENT 'Fecha de alta del paciente',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb3;

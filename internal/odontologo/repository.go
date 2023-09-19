@@ -17,7 +17,7 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert           = `INSERT INTO my_db.odontologo(apellido,nombre,matricula) VALUES(?,?,?,?,?)`
+	QueryInsert           = `INSERT INTO my_db.odontologo(apellido,nombre,matricula) VALUES(?,?,?)`
 	QueryGetAll           = `SELECT id,apellido,nombre,matricula, alta FROM my_db.odontologo`
 	QueryDelete           = `DELETE FROM my_db.odontologo WHERE id = ?`
 	QueryGetById          = `SELECT id, apellido,nombre,matricula FROM my_db.odontologo WHERE id = ?`

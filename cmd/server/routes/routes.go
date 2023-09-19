@@ -50,7 +50,7 @@ func (r *router) buildOdontologoRoutes() {
 	odontologoService := odontologo.NewService(odontologoRepo)
 	controladorOdontologo := handler.NewodOntologoHandler(odontologoService)
 
-	r.routerGroup.GET("/odontologos/:id", controladorOdontologo.GetOdontologoByID())
+	r.routerGroup.GET("/odontologos/:id", controladorOdontologo.GetOdontologoByID()) //ok
 	r.routerGroup.POST("/odontologos", middleware.Authenticate(), controladorOdontologo.CreateOdontologo())
 	r.routerGroup.PUT("/odontologos/:id", middleware.Authenticate(), controladorOdontologo.UpdateOdontologo())
 	r.routerGroup.PATCH("/odontologos/:id", middleware.Authenticate(), controladorOdontologo.UpdateOdontologoForField())
