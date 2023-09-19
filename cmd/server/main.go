@@ -11,12 +11,36 @@ import (
 	"finalgo/cmd/server/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "finalgo/docs"
 )
 
 const (
 	puerto = ":8080"
 )
 
+
+// @title           Swagger Clinica Odontologica API
+// @version         1.0
+// @description     Documentacion de la clinica odontologica
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	defer func() {
 		if err := recover(); err != nil {
@@ -36,6 +60,9 @@ func main() {
 	router.Use(gin.Recovery())
 	router.Use(middleware.Logger())
 
+	// Agrego swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	
 	// Conecta a la base de datos
 	db := connectDB()
 
