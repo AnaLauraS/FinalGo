@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"finalgo/pkg/middleware"
@@ -36,18 +36,14 @@ func main() {
 	router.Use(gin.Recovery())
 	router.Use(middleware.Logger())
 
-	// API de prueba
-	router.GET("/ping", middleware.Authenticate(), func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"mensaje": "pong",
-		})
-	})
-
 	// Conecta a la base de datos
 	db := connectDB()
 
 	// Ejecuta la aplicación
 	runApp(db, router)
+
+	// cierro BD
+	defer db.Close()
 }
 
 func runApp(db *sql.DB, engine *gin.Engine) {
@@ -63,7 +59,7 @@ func runApp(db *sql.DB, engine *gin.Engine) {
 func connectDB() *sql.DB {
 	var (
 		dbUsername = "root"
-		dbPassword = ""
+		dbPassword = "1234"
 		dbHost     = "localhost"
 		dbPort     = "3306"
 		dbName     = "my_db"
@@ -76,6 +72,7 @@ func connectDB() *sql.DB {
 		log.Fatalf("Error al abrir la conexión a la base de datos: %v", err)
 	}
 
+	err = db.Ping()
 	if err := db.Ping(); err != nil {
 		log.Fatalf("Error al conectar con la base de datos: %v", err)
 	}

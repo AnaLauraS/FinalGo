@@ -17,12 +17,12 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert           = `INSERT INTO my_db.odontologos(apellido,nombre,matricula) VALUES(?,?,?,?,?)`
-	QueryGetAll           = `SELECT id,apellido,nombre,matricula, alta FROM my_db.odontologos`
-	QueryDelete           = `DELETE FROM my_db.odontologos WHERE id = ?`
-	QueryGetById          = `SELECT id, apellido,nombre,matricula FROM my_db.odontologos WHERE id = ?`
-	QueryUpdate           = `UPDATE my_db.odontologos SET apellido = ?,nombre = ?,matricula = ? WHERE id = ?`
-	QueryGetIdByMatricula = `SELECT id FROM my_db.odontologos WHERE matricula = ?`
+	QueryInsert           = `INSERT INTO my_db.odontologo(apellido,nombre,matricula) VALUES(?,?,?,?,?)`
+	QueryGetAll           = `SELECT id,apellido,nombre,matricula, alta FROM my_db.odontologo`
+	QueryDelete           = `DELETE FROM my_db.odontologo WHERE id = ?`
+	QueryGetById          = `SELECT id, apellido,nombre,matricula FROM my_db.odontologo WHERE id = ?`
+	QueryUpdate           = `UPDATE my_db.odontologo SET apellido = ?,nombre = ?,matricula = ? WHERE id = ?`
+	QueryGetIdByMatricula = `SELECT id FROM my_db.odontologo WHERE matricula = ?`
 )
 
 // defino la interfaz para que se apliquen siempre todos los métodos

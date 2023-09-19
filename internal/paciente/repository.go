@@ -17,12 +17,12 @@ var (
 
 // Queries a usar en cada función
 var (
-	QueryInsert     = `INSERT INTO my_db.pacientes(nombre, apellido, domicilio, dni, alta) VALUES(?,?,?,?,?)`
-	QueryGetAll     = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes`
-	QueryDelete     = `DELETE FROM my_db.pacientes WHERE id = ?`
-	QueryGetById    = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.pacientes WHERE id = ?`
-	QueryUpdate     = `UPDATE my_db.pacientes SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
-	QueryGetIdByDni = `SELECT id FROM my_db.pacientes WHERE dni = ?`
+	QueryInsert     = `INSERT INTO my_db.paciente(nombre, apellido, domicilio, dni, alta) VALUES(?,?,?,?,?)`
+	QueryGetAll     = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.paciente`
+	QueryDelete     = `DELETE FROM my_db.paciente WHERE id = ?`
+	QueryGetById    = `SELECT id, nombre, apellido, domicilio, dni, alta FROM my_db.paciente WHERE id = ?`
+	QueryUpdate     = `UPDATE my_db.paciente SET nombre = ?, apellido = ?, domicilio = ?, dni = ?, alta = ? WHERE id = ?`
+	QueryGetIdByDni = `SELECT id FROM my_db.paciente WHERE dni = ?`
 )
 
 // defino la interfaz para que se apliquen siempre todos los métodos
