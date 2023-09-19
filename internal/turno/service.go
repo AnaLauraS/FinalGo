@@ -14,7 +14,8 @@ type Service interface {
 	CreateTurno(ctx context.Context, t TurnoRequest) (Turno, error)
 	UpdateTurno(ctx context.Context, t TurnoRequest, id int) (Turno, error)
 	DeleteTurno(ctx context.Context, id int) error
-	GetTurnoByPaciente(ctx context.Context, dniPaciente string) (Turno, error)
+	GetTurnoByPaciente(ctx context.Context, dniPaciente string) ([]Turno, error)
+	GetTurnoByOdontologo(ctx context.Context, idOdontolog int) ([]Turno, error)
 	CreateTurnoByDniAndMatricula(ctx context.Context, t TurnoDniMatriculaRequest) (Turno, error)
 }
 
@@ -54,20 +55,37 @@ func (s *service) GetTurnoByID(ctx context.Context, id int) (Turno, error) {
 	return p, nil
 }
 
-func (s *service) GetTurnoByPaciente(ctx context.Context, dniPaciente string) (Turno, error) {
+func (s *service) GetTurnoByPaciente(ctx context.Context, dniPaciente string) ([]Turno, error) {
 	idPaciente, err := s.ps.GetPacienteIDByDNI(ctx, dniPaciente)
 	if err != nil {
 		log.Println("log de error por paciente inexistente", err.Error())
-		return Turno{}, ErrNotFound
+		return []Turno{}, ErrNotFound
 	}
 
 	t, err := s.r.GetTurnoByPaciente(ctx, idPaciente)
 	if err != nil {
 		log.Println("log de error por turno inexistente", err.Error())
-		return Turno{}, ErrNotFound
+		return []Turno{}, ErrNotFound
 	}
 	return t, nil
 }
+
+func (s *service) GetTurnoByOdontologo(ctx context.Context, idOdontologo int) ([]Turno, error) {
+	_, err := s.os.GetOdontologoByID(ctx, idOdontologo)
+	if err != nil {
+		log.Println("log de error por odontologo inexistente", err.Error())
+		return []Turno{}, ErrNotFound
+	}
+
+	t, err := s.r.GetTurnoByOdontologo(ctx, idOdontologo)
+	if err != nil {
+		log.Println("log de error por turno inexistente", err.Error())
+		return []Turno{}, ErrNotFound
+	}
+	return t, nil
+}
+
+
 
 func (s *service) CreateTurno(ctx context.Context, turnoRequest TurnoRequest) (Turno, error) {
 	// uso la estructura de request para mejor manejo de campos (no tiene el ID), llamando a una función que lo transforma en el dato que requiere la DB
