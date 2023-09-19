@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"finalgo/internal/paciente"
+	"finalgo/internal/turno"
 	"finalgo/pkg/web"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,8 @@ import (
 
 // creo la estructura del controlador, inyectando el service
 type pacienteHandler struct {
-	s paciente.Service
+	s            paciente.Service
+	turnoService turno.Service
 }
 
 // funcion para instanciar el controlador
@@ -263,6 +265,26 @@ func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 			web.ErrorResponse(c, http.StatusBadRequest)
 			return
 		}
+		// busco los turnos asociados y se los elimino tambien
+		// primero obtengo el DNI del paciente
+		paciente, err := h.s.GetPacienteByID(c, id)
+		if err != nil {
+			web.ErrorResponse(c, http.StatusBadRequest)
+			return
+		}
+		dni := paciente.DNI
+		// luego busco todos los turnos que tiene ese paciente
+		turnos, errorT := h.turnoService.GetTurnoByPaciente(c, dni)
+		// como previamente ya validé que sea un paciente existente con ese DNI, la única posibilidad de error en este punto es que el paciente no tenga turnos asociados. Entonces, si no hay error, ejecuto el borrado de turnos, caso contrario, ejecuto directamente el borrado del paciente.
+		if errorT == nil {
+			for _, turno := range turnos {
+				err := h.turnoService.DeleteTurno(c, turno.ID)
+				if err != nil {
+					web.ErrorResponse(c, http.StatusBadRequest)
+				}
+			}
+		}
+		// luego del borrado de todos los turnos, avanza con el borrado del paciente
 
 		// si falla el delete, es porque el ID era invalido
 		err = h.s.DeletePaciente(c, id)
@@ -272,5 +294,6 @@ func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 		}
 		respuesta := "Paciente de ID " + c.Param("id") + " eliminado"
 		web.OkResponse(c, http.StatusOK, respuesta)
+
 	}
 }

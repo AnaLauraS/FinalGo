@@ -3,6 +3,7 @@ package handler
 import (
 	"errors"
 	"finalgo/internal/odontologo"
+	"finalgo/internal/turno"
 	"finalgo/pkg/web"
 	"net/http"
 	"strconv"
@@ -13,6 +14,7 @@ import (
 // creo la estructura del controlador, inyectando el service
 type odontologoHandler struct {
 	s odontologo.Service
+	turnoService turno.Service
 }
 
 // funcion para instanciar el controlador
@@ -246,6 +248,18 @@ func (h *odontologoHandler) DeleteOdontologo() gin.HandlerFunc {
 			web.ErrorResponse(c, http.StatusBadRequest)
 			return
 		}
+
+		// busco los turnos asociados y se los elimino tambien
+		turnos, errorT := h.turnoService.GetTurnoByOdontologo(c, id)
+		if errorT == nil {
+			for _, turno := range turnos {
+				err := h.turnoService.DeleteTurno(c, turno.ID)
+				if err != nil {
+					web.ErrorResponse(c, http.StatusBadRequest)
+				}
+			}
+		}
+		// luego del borrado de todos los turnos, avanza con el borrado del odontologo
 
 		// si falla el delete, es porque el ID era invalido
 		err = h.s.DeleteOdontologo(c, id)
