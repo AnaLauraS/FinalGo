@@ -49,6 +49,7 @@ func main() {
 		}
 	}()
 
+
 	// Usa la librería de env.
 	errE := godotenv.Load()
 	if errE != nil {
@@ -62,6 +63,7 @@ func main() {
 
 	// Agrego swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	
 	// Conecta a la base de datos
 	db := connectDB()
@@ -82,6 +84,7 @@ func runApp(db *sql.DB, engine *gin.Engine) {
 		log.Fatalf("Error al ejecutar la aplicación: %v", err)
 	}
 }
+
 
 func connectDB() *sql.DB {
 	var (
@@ -106,3 +109,4 @@ func connectDB() *sql.DB {
 
 	return db
 }
+

@@ -29,4 +29,6 @@ func (c *pingHandler) Ping() gin.HandlerFunc {
 			"message": "pong",
 		})
 	}
+
 }
+
