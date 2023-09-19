@@ -15,7 +15,7 @@ import (
 
 // creo la estructura del controlador, inyectando el service
 type pacienteHandler struct {
-	s paciente.Service
+	s            paciente.Service
 	turnoService turno.Service
 }
 
@@ -26,8 +26,17 @@ func NewPacienteHandler(s paciente.Service) *pacienteHandler {
 	}
 }
 
-
 // POST --> agregar paciente
+// Paciente godoc
+// @Summary Create Paciente
+// @Description Create a new paciente
+// @Tags paciente
+// @Accept json
+// @Produce json
+// @Success 201 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /paciente [post]
 func (h *pacienteHandler) CreatePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var paciente paciente.PacienteRequest
@@ -53,17 +62,27 @@ func (h *pacienteHandler) CreatePaciente() gin.HandlerFunc {
 		web.OkResponse(c, 201, p)
 	}
 }
+
 // validateEmptys valida que los campos claves no esten vacios
 func validateEmptys(paciente paciente.PacienteRequest) (bool, error) {
-	if (paciente.Nombre == "" || paciente.Apellido == "" || paciente.DNI == "") {
+	if paciente.Nombre == "" || paciente.Apellido == "" || paciente.DNI == "" {
 		return false, errors.New("No se permiten los campos nombre, apellido y DNI vacíos")
 	}
 	return true, nil
 }
 
-
-
 // GET --> traer paciente por id
+// Paciente godoc
+// @Summary get paciente
+// @Description Get paciente by id
+// @Tags paciente
+// @Param id path int true "id del paciente"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /paciente/:id [get]
 func (h *pacienteHandler) GetPacienteByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -100,10 +119,18 @@ func (h *pacienteHandler) GetPacienteByID() gin.HandlerFunc {
 		web.OkResponse(ctx, http.StatusOK, pacientes)
 	}
 }
-	
-
 
 // PUT --> actualiza completo un paciente
+// Paciente godoc
+// @Summary update paciente
+// @Description Update paciente by id
+// @Tags paciente
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /paciente/:id [put]
 func (h *pacienteHandler) UpdatePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -140,9 +167,17 @@ func (h *pacienteHandler) UpdatePaciente() gin.HandlerFunc {
 	}
 }
 
-
-
 // PATCH --> actualiza parcial un paciente
+// Paciente godoc
+// @Summary update paciente for field
+// @Description Update paciente for field
+// @Tags paciente
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /paciente/patch/:id [patch]
 func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -169,27 +204,27 @@ func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 
 		// creo el paciente request con los datos del original
 		pacienteRequest := paciente.PacienteRequest{
-			Nombre: pacienteOriginal.Nombre,
-			Apellido: pacienteOriginal.Apellido,
+			Nombre:    pacienteOriginal.Nombre,
+			Apellido:  pacienteOriginal.Apellido,
 			Domicilio: pacienteOriginal.Domicilio,
-			DNI: pacienteOriginal.DNI,
-			Alta: pacienteOriginal.Alta,
+			DNI:       pacienteOriginal.DNI,
+			Alta:      pacienteOriginal.Alta,
 		}
 
 		// verifico si los campos tienen datos, los casteo y se los asigno al paciente request
-		if nombreQuery !="" {
+		if nombreQuery != "" {
 			pacienteRequest.Nombre = nombreQuery
 		}
-		if apellidoQuery !="" {
+		if apellidoQuery != "" {
 			pacienteRequest.Apellido = apellidoQuery
 		}
-		if domicilioQuery !="" {
+		if domicilioQuery != "" {
 			pacienteRequest.Domicilio = domicilioQuery
 		}
-		if dniQuery !="" {
+		if dniQuery != "" {
 			pacienteRequest.DNI = dniQuery
 		}
-		if altaQuery !="" {
+		if altaQuery != "" {
 			fecha, err := time.Parse("2006-01-02", altaQuery)
 			if err != nil {
 				web.ErrorResponse(c, http.StatusBadRequest)
@@ -197,7 +232,7 @@ func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 			}
 			pacienteRequest.Alta = fecha
 		}
-		
+
 		// llamo al metodo de actualizar paciente, usando el pacienteRequest
 		p, err := h.s.UpdatePaciente(c, pacienteRequest, id)
 		if err != nil {
@@ -208,10 +243,19 @@ func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 		web.OkResponse(c, http.StatusOK, p)
 	}
 }
-	
-
 
 // DELETE --> elimina un paciente
+// Paciente godoc
+// @Summary delete paciente
+// @Description Delete paciente by id
+// @Tags paciente
+// @Param id path int true "id del paciente"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /paciente/:id [delete]
 func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -221,7 +265,6 @@ func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 			web.ErrorResponse(c, http.StatusBadRequest)
 			return
 		}
-		
 		// busco los turnos asociados y se los elimino tambien
 		// primero obtengo el DNI del paciente
 		paciente, err := h.s.GetPacienteByID(c, id)

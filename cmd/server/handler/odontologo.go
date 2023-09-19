@@ -25,6 +25,16 @@ func NewodOntologoHandler(s odontologo.Service) *odontologoHandler {
 }
 
 // POST --> agregar odontologo
+// Odontologo godoc
+// @Summary Create Odontologo
+// @Description Create a new odontologo
+// @Tags odontologo
+// @Accept json
+// @Produce json
+// @Success 201 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /odontologo [post]
 func (h *odontologoHandler) CreateOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var odontologo odontologo.OdontologoRequest
@@ -60,6 +70,17 @@ func validateEmptys2(odontologo odontologo.OdontologoRequest) (bool, error) {
 }
 
 // GET --> traer odontologo por id
+// Odontologo godoc
+// @Summary get odontologo
+// @Description Get odontologo by id
+// @Tags odontologo
+// @Param id path int true "id del odontologo"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /odontologo/:id [get]
 func (h *odontologoHandler) GetOdontologoByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -98,6 +119,16 @@ func (h *odontologoHandler) GetOdontologoByID() gin.HandlerFunc {
 }
 
 // PUT --> actualiza completo un odontologo
+// Odontologo godoc
+// @Summary update odontologo
+// @Description Update odontologo by id
+// @Tags odontologo
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /odontologo/:id [put]
 func (h *odontologoHandler) UpdateOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -135,6 +166,16 @@ func (h *odontologoHandler) UpdateOdontologo() gin.HandlerFunc {
 }
 
 // PATCH --> actualiza parcial un odontologo
+// Odontologo godoc
+// @Summary update odontologo for field
+// @Description Update odontologo for field
+// @Tags odontologo
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /odontologo/patch/:id [patch]
 func (h *odontologoHandler) UpdateOdontologoForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -187,6 +228,17 @@ func (h *odontologoHandler) UpdateOdontologoForField() gin.HandlerFunc {
 }
 
 // DELETE --> elimina un odontologo
+// Odontologo godoc
+// @Summary delete odontologo
+// @Description Delete odontologo by id
+// @Tags odontologo
+// @Param id path int true "id del odontologo"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /odontologo/:id [delete]
 func (h *odontologoHandler) DeleteOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
