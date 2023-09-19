@@ -24,6 +24,16 @@ func NewTurnoHandler(s turno.Service) *turnoHandler {
 }
 
 // POST --> agregar turno
+// Turno godoc
+// @Summary Create Turno
+// @Description Create a new turno
+// @Tags turno
+// @Accept json
+// @Produce json
+// @Success 201 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno [post]
 func (h *turnoHandler) CreateTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var turno turno.TurnoRequest
@@ -59,6 +69,16 @@ func validateTurnoEmptys(turno turno.TurnoRequest) (bool, error) {
 }
 
 // POST --> agregar turno con dni de paciente y matricula del odontologo
+// Turno godoc
+// @Summary Create Turno By DNI and Matricula
+// @Description Create a new turno by DNI and Matricula
+// @Tags turno
+// @Accept json
+// @Produce json
+// @Success 201 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/dni [post]
 func (h *turnoHandler) CreateTurnoByDniAndMatricula() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var turno turno.TurnoDniMatriculaRequest
@@ -94,6 +114,17 @@ func validateTurnoEmptys2(turno turno.TurnoDniMatriculaRequest) (bool, error) {
 }
 
 // GET --> traer turno por id
+// Turno godoc
+// @Summary turno example
+// @Description Get turno by id
+// @Tags turno
+// @Param id path int true "id del turno"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/:id [get]
 func (h *turnoHandler) GetTurnoByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -132,6 +163,17 @@ func (h *turnoHandler) GetTurnoByID() gin.HandlerFunc {
 }
 
 // GET --> traer turno por dni del paciente
+// Turno godoc
+// @Summary get turno by dni
+// @Description Get turno by dni
+// @Tags turno
+// @Param dni path string true "dni del paciente"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/dni/:id [get]
 func (h *turnoHandler) GetTurnoByPaciente() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el DNI que pasaron por parámetro
@@ -160,6 +202,16 @@ func (h *turnoHandler) GetTurnoByPaciente() gin.HandlerFunc {
 }
 
 // PUT --> actualiza completo un turno
+// Turno godoc
+// @Summary update turno
+// @Description Update turno by id
+// @Tags turno
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/:id [put]
 func (h *turnoHandler) UpdateTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -197,6 +249,16 @@ func (h *turnoHandler) UpdateTurno() gin.HandlerFunc {
 }
 
 // PATCH --> actualiza parcial un turno
+// Turno godoc
+// @Summary update turno for field
+// @Description Update turno for field
+// @Tags turno
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/patch/:id [patch]
 func (h *turnoHandler) UpdateTurnoForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -269,6 +331,17 @@ func (h *turnoHandler) UpdateTurnoForField() gin.HandlerFunc {
 }
 
 // DELETE --> elimina un turno
+// Turno godoc
+// @Summary delete turno
+// @Description Delete turno by id
+// @Tags turno
+// @Param id path int true "id del turno"
+// @Accept json
+// @Produce json
+// @Success 200 {object} web.response
+// @Failure 400 {object} web.errorResponse
+// @Failure 500 {object} web.errorResponse
+// @Router /turno/:id [delete]
 func (h *turnoHandler) DeleteTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id

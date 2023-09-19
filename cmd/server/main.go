@@ -15,6 +15,25 @@ const (
 	puerto = ":8080"
 )
 
+// @title           Swagger Clinica Odontologica API
+// @version         1.0
+// @description     Documentacion de la clinica odontologica
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 
 	defer func() {
@@ -24,7 +43,7 @@ func main() {
 		}
 	}()
 
-	// uso la libreria de env. 
+	// uso la libreria de env.
 	errE := godotenv.Load()
 	if errE != nil {
 		log.Fatal(errE)
@@ -36,7 +55,7 @@ func main() {
 	router.Use(middleware.Logger())
 
 	// API de prueba
-	router.GET("/ping",  middleware.Authenticate(), func(ctx *gin.Context) {
+	router.GET("/ping", middleware.Authenticate(), func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"mensaje": "pong",
 		})
