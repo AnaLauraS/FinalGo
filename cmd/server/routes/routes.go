@@ -65,7 +65,11 @@ func (r *router) buildOdontologoRoutes() {
 func (r *router) buildPacienteRoutes() {
 	pacienteRepo := paciente.NewRepositoryMySql(r.db)
 	pacienteService := paciente.NewService(pacienteRepo)
-	controladorPaciente := handler.NewPacienteHandler(pacienteService)
+	odontologoRepo := odontologo.NewRepositoryMySql(r.db)
+	odontologoService := odontologo.NewService(odontologoRepo)
+	turnoRepo := turno.NewRepositoryMySql(r.db)
+	turnoService := turno.NewService(turnoRepo, pacienteService, odontologoService)
+	controladorPaciente := handler.NewPacienteHandler(pacienteService, turnoService)
 
 	r.routerGroup.GET("/pacientes/:id", controladorPaciente.GetPacienteByID())
 	r.routerGroup.POST("/pacientes", middleware.Authenticate(), controladorPaciente.CreatePaciente())

@@ -184,6 +184,7 @@ func (r *repository) UpdatePaciente(ctx context.Context, paciente Paciente) (Pac
 		paciente.Domicilio,
 		paciente.DNI,
 		paciente.Alta,
+		paciente.ID,
 	)
 
 	// verifico error de parámetros

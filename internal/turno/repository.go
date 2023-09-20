@@ -240,6 +240,7 @@ func (r *repository) UpdateTurno(ctx context.Context, turno Turno) (Turno, error
 		turno.IdPaciente,
 		turno.FechaHora,
 		turno.Descripcion,
+		turno.ID,
 	)
 
 	// verifico error de parámetros

@@ -20,9 +20,10 @@ type pacienteHandler struct {
 }
 
 // funcion para instanciar el controlador
-func NewPacienteHandler(s paciente.Service) *pacienteHandler {
+func NewPacienteHandler(s paciente.Service, t turno.Service) *pacienteHandler {
 	return &pacienteHandler{
 		s: s,
+		turnoService: t,
 	}
 }
 
