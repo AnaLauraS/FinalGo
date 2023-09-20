@@ -30,10 +30,11 @@ func NewTurnoHandler(s turno.Service) *turnoHandler {
 // @Tags turno
 // @Accept json
 // @Produce json
+// @Param	Turno	body	turno.TurnoRequest	true	"Add turno"
 // @Success 201 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno [post]
+// @Router /turnos [post]
 func (h *turnoHandler) CreateTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var turno turno.TurnoRequest
@@ -75,10 +76,11 @@ func validateTurnoEmptys(turno turno.TurnoRequest) (bool, error) {
 // @Tags turno
 // @Accept json
 // @Produce json
+// @Param	Turno	body	turno.TurnoDniMatriculaRequest	true	"Add turno by dni and matricula"
 // @Success 201 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/dni [post]
+// @Router /turnos/dni [post]
 func (h *turnoHandler) CreateTurnoByDniAndMatricula() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var turno turno.TurnoDniMatriculaRequest
@@ -124,7 +126,7 @@ func validateTurnoEmptys2(turno turno.TurnoDniMatriculaRequest) (bool, error) {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/:id [get]
+// @Router /turnos/:id [get]
 func (h *turnoHandler) GetTurnoByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -173,7 +175,7 @@ func (h *turnoHandler) GetTurnoByID() gin.HandlerFunc {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/dni/:id [get]
+// @Router /turnos/dni/:id [get]
 func (h *turnoHandler) GetTurnoByPaciente() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el DNI que pasaron por parámetro
@@ -208,10 +210,11 @@ func (h *turnoHandler) GetTurnoByPaciente() gin.HandlerFunc {
 // @Tags turno
 // @Accept json
 // @Produce json
+// @Param	Turno	body	turno.TurnoRequest	true	"Update turno"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/:id [put]
+// @Router /turnos/:id [put]
 func (h *turnoHandler) UpdateTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -255,10 +258,11 @@ func (h *turnoHandler) UpdateTurno() gin.HandlerFunc {
 // @Tags turno
 // @Accept json
 // @Produce json
+// @Param	Turno	body	turno.TurnoRequest	true	"Update turno for field"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/patch/:id [patch]
+// @Router /turnos/patch/:id [patch]
 func (h *turnoHandler) UpdateTurnoForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -341,7 +345,7 @@ func (h *turnoHandler) UpdateTurnoForField() gin.HandlerFunc {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /turno/:id [delete]
+// @Router /turnos/:id [delete]
 func (h *turnoHandler) DeleteTurno() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id

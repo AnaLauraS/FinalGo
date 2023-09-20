@@ -13,7 +13,7 @@ import (
 
 // creo la estructura del controlador, inyectando el service
 type odontologoHandler struct {
-	s odontologo.Service
+	s            odontologo.Service
 	turnoService turno.Service
 }
 
@@ -31,10 +31,11 @@ func NewodOntologoHandler(s odontologo.Service) *odontologoHandler {
 // @Tags odontologo
 // @Accept json
 // @Produce json
+// @Param	Odontologo	body	odontologo.OdontologoRequest	true	"Add odontologo"
 // @Success 201 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /odontologo [post]
+// @Router /odontologos [post]
 func (h *odontologoHandler) CreateOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var odontologo odontologo.OdontologoRequest
@@ -63,7 +64,7 @@ func (h *odontologoHandler) CreateOdontologo() gin.HandlerFunc {
 
 // validateEmptys valida que los campos claves no esten vacios
 func validateEmptys2(odontologo odontologo.OdontologoRequest) (bool, error) {
-	if (odontologo.Apellido == "" || odontologo.Nombre == "" || odontologo.Matricula == "") {
+	if odontologo.Apellido == "" || odontologo.Nombre == "" || odontologo.Matricula == "" {
 		return false, errors.New("No se permiten los campos apellido, nombre y matricula vacíos")
 	}
 	return true, nil
@@ -80,7 +81,7 @@ func validateEmptys2(odontologo odontologo.OdontologoRequest) (bool, error) {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /odontologo/:id [get]
+// @Router /odontologos/:id [get]
 func (h *odontologoHandler) GetOdontologoByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -125,10 +126,11 @@ func (h *odontologoHandler) GetOdontologoByID() gin.HandlerFunc {
 // @Tags odontologo
 // @Accept json
 // @Produce json
+// @Param	Odontologo	body	odontologo.OdontologoRequest	true	"Update odontologo"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /odontologo/:id [put]
+// @Router /odontologos/:id [put]
 func (h *odontologoHandler) UpdateOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -172,10 +174,11 @@ func (h *odontologoHandler) UpdateOdontologo() gin.HandlerFunc {
 // @Tags odontologo
 // @Accept json
 // @Produce json
+// @Param	Odontologo	body	odontologo.OdontologoRequest	true	"Update odontologo for field"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /odontologo/patch/:id [patch]
+// @Router /odontologos/patch/:id [patch]
 func (h *odontologoHandler) UpdateOdontologoForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -238,7 +241,7 @@ func (h *odontologoHandler) UpdateOdontologoForField() gin.HandlerFunc {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /odontologo/:id [delete]
+// @Router /odontologos/:id [delete]
 func (h *odontologoHandler) DeleteOdontologo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id

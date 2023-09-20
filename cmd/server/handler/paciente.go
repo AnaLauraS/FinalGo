@@ -33,10 +33,11 @@ func NewPacienteHandler(s paciente.Service) *pacienteHandler {
 // @Tags paciente
 // @Accept json
 // @Produce json
+// @Param	Paciente	body	paciente.PacienteRequest	true	"Add paciente"
 // @Success 201 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /paciente [post]
+// @Router /pacientes [post]
 func (h *pacienteHandler) CreatePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var paciente paciente.PacienteRequest
@@ -82,7 +83,7 @@ func validateEmptys(paciente paciente.PacienteRequest) (bool, error) {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /paciente/:id [get]
+// @Router /pacientes/:id [get]
 func (h *pacienteHandler) GetPacienteByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// obtengo el ID que pasaron por parámetro
@@ -127,10 +128,11 @@ func (h *pacienteHandler) GetPacienteByID() gin.HandlerFunc {
 // @Tags paciente
 // @Accept json
 // @Produce json
+// @Param	Paciente	body	paciente.PacienteRequest	true	"Update paciente"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /paciente/:id [put]
+// @Router /pacientes/:id [put]
 func (h *pacienteHandler) UpdatePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -174,10 +176,11 @@ func (h *pacienteHandler) UpdatePaciente() gin.HandlerFunc {
 // @Tags paciente
 // @Accept json
 // @Produce json
+// @Param	Paciente	body	paciente.PacienteRequest	true	"Add paciente for field"
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /paciente/patch/:id [patch]
+// @Router /pacientes/patch/:id [patch]
 func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
@@ -255,7 +258,7 @@ func (h *pacienteHandler) UpdatePacienteForField() gin.HandlerFunc {
 // @Success 200 {object} web.response
 // @Failure 400 {object} web.errorResponse
 // @Failure 500 {object} web.errorResponse
-// @Router /paciente/:id [delete]
+// @Router /pacientes/:id [delete]
 func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// valido id
