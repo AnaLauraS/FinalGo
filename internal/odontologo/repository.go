@@ -177,6 +177,7 @@ func (r *repository) UpdateOdontologo(ctx context.Context, o Odontologo) (Odonto
 		o.Apellido,
 		o.Nombre,
 		o.Matricula,
+		o.ID,
 	)
 
 	// verifico error de parámetros

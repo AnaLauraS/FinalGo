@@ -144,7 +144,7 @@ func (h *odontologoHandler) UpdateOdontologo() gin.HandlerFunc {
 
 		// verifico el json a enviar
 		var odontologo odontologo.OdontologoRequest
-		err = c.ShouldBindJSON(&odontologo)
+		err = c.Bind(&odontologo)
 		if err != nil {
 			web.ErrorResponse(c, http.StatusBadRequest)
 			return
