@@ -18,9 +18,10 @@ type odontologoHandler struct {
 }
 
 // funcion para instanciar el controlador
-func NewodOntologoHandler(s odontologo.Service) *odontologoHandler {
+func NewodOntologoHandler(s odontologo.Service, t turno.Service) *odontologoHandler {
 	return &odontologoHandler{
 		s: s,
+		turnoService: t,
 	}
 }
 

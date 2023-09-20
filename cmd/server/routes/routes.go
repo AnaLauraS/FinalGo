@@ -36,7 +36,7 @@ func (r *router) MapRoutes() {
 	r.buildOdontologoRoutes()
 	r.buildPacienteRoutes()
 	r.buildTurnoRoutes()
-	// agregar el ping
+	r.buildPingRoutes()
 }
 
 // setGroup establece el grupo de enrutador.
@@ -48,9 +48,13 @@ func (r *router) setGroup() {
 func (r *router) buildOdontologoRoutes() {
 	odontologoRepo := odontologo.NewRepositoryMySql(r.db)
 	odontologoService := odontologo.NewService(odontologoRepo)
-	controladorOdontologo := handler.NewodOntologoHandler(odontologoService)
+	turnoRepo := turno.NewRepositoryMySql(r.db)
+	pacienteRepo := paciente.NewRepositoryMySql(r.db)
+	pacienteService := paciente.NewService(pacienteRepo)
+	turnoService := turno.NewService(turnoRepo, pacienteService, odontologoService)
+	controladorOdontologo := handler.NewodOntologoHandler(odontologoService, turnoService)
 
-	r.routerGroup.GET("/odontologos/:id", controladorOdontologo.GetOdontologoByID()) //ok
+	r.routerGroup.GET("/odontologos/:id", controladorOdontologo.GetOdontologoByID()) 
 	r.routerGroup.POST("/odontologos", middleware.Authenticate(), controladorOdontologo.CreateOdontologo())
 	r.routerGroup.PUT("/odontologos/:id", middleware.Authenticate(), controladorOdontologo.UpdateOdontologo())
 	r.routerGroup.PATCH("/odontologos/:id", middleware.Authenticate(), controladorOdontologo.UpdateOdontologoForField())
@@ -87,4 +91,9 @@ func (r *router) buildTurnoRoutes() {
 	r.routerGroup.PUT("/turnos/:id", middleware.Authenticate(), controladorTurno.UpdateTurno())
 	r.routerGroup.PATCH("/turnos/:id", middleware.Authenticate(), controladorTurno.UpdateTurnoForField())
 	r.routerGroup.DELETE("/turnos/:id", middleware.Authenticate(), controladorTurno.DeleteTurno())
+}
+
+// API de prueba
+func (r *router) buildPingRoutes() {
+	r.routerGroup.GET("/ping", handler.NewPingHandler().Ping())
 }
