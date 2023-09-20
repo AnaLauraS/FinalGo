@@ -1,5 +1,50 @@
 basePath: /api/v1
 definitions:
+  odontologo.OdontologoRequest:
+    properties:
+      apellido:
+        description: ID        int    `json:"id"`
+        type: string
+      matricula:
+        type: string
+      nombre:
+        type: string
+    type: object
+  paciente.PacienteRequest:
+    properties:
+      apellido:
+        type: string
+      dni:
+        type: string
+      domicilio:
+        type: string
+      fecha_alta:
+        type: string
+      nombre:
+        type: string
+    type: object
+  turno.TurnoDniMatriculaRequest:
+    properties:
+      descripcion:
+        type: string
+      dni_paciente:
+        type: string
+      fecha_hora:
+        type: string
+      matricula_odontologo:
+        type: string
+    type: object
+  turno.TurnoRequest:
+    properties:
+      descripcion:
+        type: string
+      fecha_hora:
+        type: string
+      id_odontologo:
+        type: integer
+      id_paciente:
+        type: integer
+    type: object
   web.errorResponse:
     properties:
       code:
@@ -30,11 +75,18 @@ info:
   title: Swagger Clinica Odontologica API
   version: "1.0"
 paths:
-  /odontologo:
+  /odontologos:
     post:
       consumes:
       - application/json
       description: Create a new odontologo
+      parameters:
+      - description: Add odontologo
+        in: body
+        name: Odontologo
+        required: true
+        schema:
+          $ref: '#/definitions/odontologo.OdontologoRequest'
       produces:
       - application/json
       responses:
@@ -53,7 +105,7 @@ paths:
       summary: Create Odontologo
       tags:
       - odontologo
-  /odontologo/:id:
+  /odontologos/:id:
     delete:
       consumes:
       - application/json
@@ -114,6 +166,13 @@ paths:
       consumes:
       - application/json
       description: Update odontologo by id
+      parameters:
+      - description: Update odontologo
+        in: body
+        name: Odontologo
+        required: true
+        schema:
+          $ref: '#/definitions/odontologo.OdontologoRequest'
       produces:
       - application/json
       responses:
@@ -132,11 +191,18 @@ paths:
       summary: update odontologo
       tags:
       - odontologo
-  /odontologo/patch/:id:
+  /odontologos/patch/:id:
     patch:
       consumes:
       - application/json
       description: Update odontologo for field
+      parameters:
+      - description: Update odontologo for field
+        in: body
+        name: Odontologo
+        required: true
+        schema:
+          $ref: '#/definitions/odontologo.OdontologoRequest'
       produces:
       - application/json
       responses:
@@ -155,11 +221,18 @@ paths:
       summary: update odontologo for field
       tags:
       - odontologo
-  /paciente:
+  /pacientes:
     post:
       consumes:
       - application/json
       description: Create a new paciente
+      parameters:
+      - description: Add paciente
+        in: body
+        name: Paciente
+        required: true
+        schema:
+          $ref: '#/definitions/paciente.PacienteRequest'
       produces:
       - application/json
       responses:
@@ -178,7 +251,7 @@ paths:
       summary: Create Paciente
       tags:
       - paciente
-  /paciente/:id:
+  /pacientes/:id:
     delete:
       consumes:
       - application/json
@@ -239,6 +312,13 @@ paths:
       consumes:
       - application/json
       description: Update paciente by id
+      parameters:
+      - description: Update paciente
+        in: body
+        name: Paciente
+        required: true
+        schema:
+          $ref: '#/definitions/paciente.PacienteRequest'
       produces:
       - application/json
       responses:
@@ -257,11 +337,18 @@ paths:
       summary: update paciente
       tags:
       - paciente
-  /paciente/patch/:id:
+  /pacientes/patch/:id:
     patch:
       consumes:
       - application/json
       description: Update paciente for field
+      parameters:
+      - description: Add paciente for field
+        in: body
+        name: Paciente
+        required: true
+        schema:
+          $ref: '#/definitions/paciente.PacienteRequest'
       produces:
       - application/json
       responses:
@@ -295,11 +382,18 @@ paths:
       summary: ping
       tags:
       - example
-  /turno:
+  /turnos:
     post:
       consumes:
       - application/json
       description: Create a new turno
+      parameters:
+      - description: Add turno
+        in: body
+        name: Turno
+        required: true
+        schema:
+          $ref: '#/definitions/turno.TurnoRequest'
       produces:
       - application/json
       responses:
@@ -318,7 +412,7 @@ paths:
       summary: Create Turno
       tags:
       - turno
-  /turno/:id:
+  /turnos/:id:
     delete:
       consumes:
       - application/json
@@ -379,6 +473,13 @@ paths:
       consumes:
       - application/json
       description: Update turno by id
+      parameters:
+      - description: Update turno
+        in: body
+        name: Turno
+        required: true
+        schema:
+          $ref: '#/definitions/turno.TurnoRequest'
       produces:
       - application/json
       responses:
@@ -397,11 +498,18 @@ paths:
       summary: update turno
       tags:
       - turno
-  /turno/dni:
+  /turnos/dni:
     post:
       consumes:
       - application/json
       description: Create a new turno by DNI and Matricula
+      parameters:
+      - description: Add turno by dni and matricula
+        in: body
+        name: Turno
+        required: true
+        schema:
+          $ref: '#/definitions/turno.TurnoDniMatriculaRequest'
       produces:
       - application/json
       responses:
@@ -420,7 +528,7 @@ paths:
       summary: Create Turno By DNI and Matricula
       tags:
       - turno
-  /turno/dni/:id:
+  /turnos/dni/:id:
     get:
       consumes:
       - application/json
@@ -449,11 +557,18 @@ paths:
       summary: get turno by dni
       tags:
       - turno
-  /turno/patch/:id:
+  /turnos/patch/:id:
     patch:
       consumes:
       - application/json
       description: Update turno for field
+      parameters:
+      - description: Update turno for field
+        in: body
+        name: Turno
+        required: true
+        schema:
+          $ref: '#/definitions/turno.TurnoRequest'
       produces:
       - application/json
       responses:

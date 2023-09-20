@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/odontologo": {
+        "/odontologos": {
             "post": {
                 "description": "Create a new odontologo",
                 "consumes": [
@@ -37,6 +37,17 @@ const docTemplate = `{
                     "odontologo"
                 ],
                 "summary": "Create Odontologo",
+                "parameters": [
+                    {
+                        "description": "Add odontologo",
+                        "name": "Odontologo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/odontologo.OdontologoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -59,7 +70,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/odontologo/:id": {
+        "/odontologos/:id": {
             "get": {
                 "description": "Get odontologo by id",
                 "consumes": [
@@ -114,6 +125,17 @@ const docTemplate = `{
                     "odontologo"
                 ],
                 "summary": "update odontologo",
+                "parameters": [
+                    {
+                        "description": "Update odontologo",
+                        "name": "Odontologo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/odontologo.OdontologoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -178,7 +200,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/odontologo/patch/:id": {
+        "/odontologos/patch/:id": {
             "patch": {
                 "description": "Update odontologo for field",
                 "consumes": [
@@ -191,6 +213,17 @@ const docTemplate = `{
                     "odontologo"
                 ],
                 "summary": "update odontologo for field",
+                "parameters": [
+                    {
+                        "description": "Update odontologo for field",
+                        "name": "Odontologo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/odontologo.OdontologoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -213,7 +246,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/paciente": {
+        "/pacientes": {
             "post": {
                 "description": "Create a new paciente",
                 "consumes": [
@@ -226,6 +259,17 @@ const docTemplate = `{
                     "paciente"
                 ],
                 "summary": "Create Paciente",
+                "parameters": [
+                    {
+                        "description": "Add paciente",
+                        "name": "Paciente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/paciente.PacienteRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -248,7 +292,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/paciente/:id": {
+        "/pacientes/:id": {
             "get": {
                 "description": "Get paciente by id",
                 "consumes": [
@@ -303,6 +347,17 @@ const docTemplate = `{
                     "paciente"
                 ],
                 "summary": "update paciente",
+                "parameters": [
+                    {
+                        "description": "Update paciente",
+                        "name": "Paciente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/paciente.PacienteRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -367,7 +422,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/paciente/patch/:id": {
+        "/pacientes/patch/:id": {
             "patch": {
                 "description": "Update paciente for field",
                 "consumes": [
@@ -380,6 +435,17 @@ const docTemplate = `{
                     "paciente"
                 ],
                 "summary": "update paciente for field",
+                "parameters": [
+                    {
+                        "description": "Add paciente for field",
+                        "name": "Paciente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/paciente.PacienteRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -425,7 +491,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/turno": {
+        "/turnos": {
             "post": {
                 "description": "Create a new turno",
                 "consumes": [
@@ -438,6 +504,17 @@ const docTemplate = `{
                     "turno"
                 ],
                 "summary": "Create Turno",
+                "parameters": [
+                    {
+                        "description": "Add turno",
+                        "name": "Turno",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/turno.TurnoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -460,7 +537,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/turno/:id": {
+        "/turnos/:id": {
             "get": {
                 "description": "Get turno by id",
                 "consumes": [
@@ -515,6 +592,17 @@ const docTemplate = `{
                     "turno"
                 ],
                 "summary": "update turno",
+                "parameters": [
+                    {
+                        "description": "Update turno",
+                        "name": "Turno",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/turno.TurnoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -579,7 +667,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/turno/dni": {
+        "/turnos/dni": {
             "post": {
                 "description": "Create a new turno by DNI and Matricula",
                 "consumes": [
@@ -592,6 +680,17 @@ const docTemplate = `{
                     "turno"
                 ],
                 "summary": "Create Turno By DNI and Matricula",
+                "parameters": [
+                    {
+                        "description": "Add turno by dni and matricula",
+                        "name": "Turno",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/turno.TurnoDniMatriculaRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -614,7 +713,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/turno/dni/:id": {
+        "/turnos/dni/:id": {
             "get": {
                 "description": "Get turno by dni",
                 "consumes": [
@@ -658,7 +757,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/turno/patch/:id": {
+        "/turnos/patch/:id": {
             "patch": {
                 "description": "Update turno for field",
                 "consumes": [
@@ -671,6 +770,17 @@ const docTemplate = `{
                     "turno"
                 ],
                 "summary": "update turno for field",
+                "parameters": [
+                    {
+                        "description": "Update turno for field",
+                        "name": "Turno",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/turno.TurnoRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -695,6 +805,75 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "odontologo.OdontologoRequest": {
+            "type": "object",
+            "properties": {
+                "apellido": {
+                    "description": "ID        int    ` + "`" + `json:\"id\"` + "`" + `",
+                    "type": "string"
+                },
+                "matricula": {
+                    "type": "string"
+                },
+                "nombre": {
+                    "type": "string"
+                }
+            }
+        },
+        "paciente.PacienteRequest": {
+            "type": "object",
+            "properties": {
+                "apellido": {
+                    "type": "string"
+                },
+                "dni": {
+                    "type": "string"
+                },
+                "domicilio": {
+                    "type": "string"
+                },
+                "fecha_alta": {
+                    "type": "string"
+                },
+                "nombre": {
+                    "type": "string"
+                }
+            }
+        },
+        "turno.TurnoDniMatriculaRequest": {
+            "type": "object",
+            "properties": {
+                "descripcion": {
+                    "type": "string"
+                },
+                "dni_paciente": {
+                    "type": "string"
+                },
+                "fecha_hora": {
+                    "type": "string"
+                },
+                "matricula_odontologo": {
+                    "type": "string"
+                }
+            }
+        },
+        "turno.TurnoRequest": {
+            "type": "object",
+            "properties": {
+                "descripcion": {
+                    "type": "string"
+                },
+                "fecha_hora": {
+                    "type": "string"
+                },
+                "id_odontologo": {
+                    "type": "integer"
+                },
+                "id_paciente": {
+                    "type": "integer"
+                }
+            }
+        },
         "web.errorResponse": {
             "type": "object",
             "properties": {
