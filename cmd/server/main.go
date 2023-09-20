@@ -2,13 +2,15 @@ package main
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"fmt"
 	"log"
 	"os"
 
-	"finalgo/pkg/middleware"
+	_ "github.com/go-sql-driver/mysql"
+
 	"finalgo/cmd/server/routes"
+	"finalgo/pkg/middleware"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
@@ -20,7 +22,6 @@ import (
 const (
 	puerto = ":8080"
 )
-
 
 // @title           Swagger Clinica Odontologica API
 // @version         1.0
@@ -49,7 +50,6 @@ func main() {
 		}
 	}()
 
-
 	// Usa la librería de env.
 	errE := godotenv.Load()
 	if errE != nil {
@@ -64,7 +64,6 @@ func main() {
 	// Agrego swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	
 	// Conecta a la base de datos
 	db := connectDB()
 
@@ -84,7 +83,6 @@ func runApp(db *sql.DB, engine *gin.Engine) {
 		log.Fatalf("Error al ejecutar la aplicación: %v", err)
 	}
 }
-
 
 func connectDB() *sql.DB {
 	var (
@@ -109,4 +107,3 @@ func connectDB() *sql.DB {
 
 	return db
 }
-

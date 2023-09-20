@@ -279,7 +279,7 @@ func (h *pacienteHandler) DeletePaciente() gin.HandlerFunc {
 		// luego busco todos los turnos que tiene ese paciente
 		turnos, errorT := h.turnoService.GetTurnoByPaciente(c, dni)
 		// como previamente ya validé que sea un paciente existente con ese DNI, la única posibilidad de error en este punto es que el paciente no tenga turnos asociados. Entonces, si no hay error, ejecuto el borrado de turnos, caso contrario, ejecuto directamente el borrado del paciente.
-		if errorT == nil {
+		if errorT == nil || turnos != nil {
 			for _, turno := range turnos {
 				err := h.turnoService.DeleteTurno(c, turno.ID)
 				if err != nil {

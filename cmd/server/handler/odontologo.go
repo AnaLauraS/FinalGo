@@ -254,7 +254,7 @@ func (h *odontologoHandler) DeleteOdontologo() gin.HandlerFunc {
 
 		// busco los turnos asociados y se los elimino tambien
 		turnos, errorT := h.turnoService.GetTurnoByOdontologo(c, id)
-		if errorT == nil {
+		if errorT == nil && turnos != nil {
 			for _, turno := range turnos {
 				err := h.turnoService.DeleteTurno(c, turno.ID)
 				if err != nil {
